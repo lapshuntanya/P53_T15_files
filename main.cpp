@@ -1,9 +1,7 @@
 #include <iostream>
 #include <cstdio>
 using namespace std;
-
-int main() {
-
+void task0() {
     FILE* file = nullptr;
 
     //1 - Відкриття файлу
@@ -23,6 +21,48 @@ int main() {
         fclose(file);
         cout << "Saved!\n";
     }
+}
+
+void task5() {
+//5.Дано файл (task5.txt), елементами якого є числа (10 чисел). Надрукувати:
+// а) перший елемент;
+//     б) третій елемент;
+//     в) п-й елемент;
+
+    FILE *file = nullptr;
+    //fopen_s(&file, "task5.txt", "r"); //VS
+    file = fopen("task5.txt", "r"); //CLion, Online
+
+    if (file == nullptr) {
+        cout << "Error: not opened!\n";
+    }else {
+        //1 спосіб = ЗНАЄМО скільки чисел
+        int buf = 0;
+        for (int i =0 ; i < 10; i++) {
+           // fscanf_s(file, "%d", &buf); //VS
+            fscanf(file, "%d", &buf); //CLion, Online
+            cout << buf << " ";
+        }
+        cout << endl;
+        //Після першого прочитання курсор знаходиться в кінці
+        //Переміщуємо курсор на початок файлу
+        fseek(file, 0, SEEK_SET); //на 0 байта початку файла, SEEK_SET - константа початку файла
+
+        //2 спосіб = НЕ ЗНАЄМО скільки чисел
+        while (!feof(file)) {// поки НЕ кінець файлу
+            // fscanf_s(file, "%d", &buf); //VS
+            fscanf(file, "%d", &buf); //CLion, Online
+            cout << buf << " ";
+        }
+
+        fclose(file);
+    }
+
+}
+
+int main() {
+
+    task5();
 
 
 
